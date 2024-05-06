@@ -22,17 +22,10 @@ private:
         }
     }
 
-    void traverse(ListNode* curr) {
-        if (!curr || !curr->next) return;
-
-        traverse(curr->next);
-        cout << curr->val << " ";
-    }
 public:
     ListNode* removeNodes(ListNode* head) {
         ListNode* prev = nullptr;
         ListNode* curr = head;
-        traverse(curr);
         remove(prev, curr, head);
         return head;
     }
