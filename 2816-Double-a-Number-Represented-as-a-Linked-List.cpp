@@ -34,26 +34,44 @@ private:
         head = new_node;
     }
 
+    void doubleHelper(ListNode* curr, int& carry) {
+        if (!curr) return;
+
+        doubleHelper(curr->next, carry);
+        int double_val = curr->val * 2 + carry;
+        curr->val = double_val % 10;
+        carry = double_val / 10;
+    }
+
 public:
     ListNode* doubleIt(ListNode* head) {
-        if (!head) return head;
+        // revrese two times
+        // if (!head) return head;
 
-        reverse(head);
+        // reverse(head);
 
+        // int carry = 0;
+        // ListNode* curr = head;
+
+        // while (curr) {
+        //     int double_val = (curr->val) * 2 + carry;
+        //     curr->val = double_val % 10;
+        //     carry = double_val / 10;
+        //     curr = curr->next;
+        // }
+
+        // reverse(head);
+
+        // if (carry != 0) add_node(head, carry);
+
+        // return head;
+
+        // reverse only once using recursion
         int carry = 0;
-        ListNode* curr = head;
-
-        while (curr) {
-            int double_val = (curr->val) * 2 + carry;
-            curr->val = double_val % 10;
-            carry = double_val / 10;
-            curr = curr->next;
-        }
-
-        reverse(head);
-
+        doubleHelper(head, carry);
         if (carry != 0) add_node(head, carry);
 
         return head;
+
     }
 };
