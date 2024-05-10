@@ -14,30 +14,30 @@ public:
         if (!list1) return list2;
         if (!list2) return list1;
 
-        ListNode* prev1 = nullptr;
-        ListNode* curr1 = list1;
-        ListNode* curr2 = list2;
-
-        while (curr2) {
-            while (curr1 && curr1->val <= curr2->val) {
-                prev1 = curr1;
-                curr1 = curr1->next;
-            }
-
-            ListNode* temp = curr2;
-            curr2 = curr2->next;
-            if (prev1) {
-                prev1->next = temp;
-                prev1 = prev1->next;
-            }
-            else {
-                list1 = temp;
-                prev1 = temp;
-            }
-
-            temp->next = curr1;
+        ListNode* head;
+        if (list1->val < list2->val) {
+            head = list1;
+            list1 = list1->next;
+        } else {
+            head = list2;
+            list2 = list2->next;
         }
 
-        return list1;
+        ListNode* curr = head;
+        while (list1 && list2) {
+            if (list1->val < list2->val) {
+                curr->next = list1;
+                list1 = list1->next;
+            } else {
+                curr->next = list2;
+                list2 = list2->next;
+            }
+            curr = curr->next;
+        }
+
+        if (list1) curr->next = list1;
+        if (list2) curr->next = list2;
+
+        return head;
     }
 };
