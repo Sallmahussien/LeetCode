@@ -24,11 +24,28 @@ private:
 
 public:
     ListNode* reverseList(ListNode* head) {
-        ListNode* prev = nullptr;
-        ListNode* curr = head;
+        // recursive solution
+        // ListNode* prev = nullptr;
+        // ListNode* curr = head;
         
-        head = reverse_helper(curr, prev);
+        // head = reverse_helper(curr, prev);
 
+        // return head;
+
+        // iterative solution
+        if (!head || !head->next) return head;
+
+        ListNode* curr = head;
+        ListNode* prev = nullptr;
+
+        while(curr) {
+            ListNode* temp = curr;
+            curr = curr->next;
+            temp->next = prev;
+            prev = temp;
+        }
+
+        head = prev;
         return head;
     }
 
