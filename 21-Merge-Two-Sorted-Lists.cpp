@@ -11,6 +11,9 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if (!list1) return list2;
+        if (!list2) return list1;
+
         ListNode* prev1 = nullptr;
         ListNode* curr1 = list1;
         ListNode* curr2 = list2;
