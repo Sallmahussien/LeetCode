@@ -44,23 +44,21 @@ public:
 
         // return nullptr;
 
-        // solution 2
+        // o(1) memory
         int len1 = get_length(headA);
         int len2 = get_length(headB);
 
         ListNode* curr1 = headA;
         ListNode* curr2 = headB;
 
-        if (len1 > len2) {
-            while(len1 != len2) {
-                curr1 = curr1->next;
-                len1--;
-            }
-        } else {
-            while(len1 != len2) {
-                curr2 = curr2->next;
-                len2--;
-            }
+        while (len1 > len2) {
+            curr1 = curr1->next;
+            len1--;
+        }
+
+        while (len2 > len1) {
+            curr2 = curr2->next;
+            len2--;
         }
 
         while (curr1 && curr2) {
