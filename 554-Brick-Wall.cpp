@@ -40,15 +40,17 @@ public:
         // return brick_crosses.empty() ? 0 :  get_min(brick_crosses); 
 
         unordered_map<int, int> gaps;
+        int max_gaps = INT_MIN;
 
         for (int i = 0; i < wall.size(); i++) {
             int width = 0;
             for (int j = 0; j < wall[i].size()-1; j++) {
                 width += wall[i][j];
                 gaps[width]++;
+                max_gaps = max(max_gaps, gaps[width]);
             }
         }
 
-        return gaps.empty() ? wall.size() : wall.size() - get_max(gaps);
+        return gaps.empty() ? wall.size() : wall.size() - max_gaps;
     }
 };
