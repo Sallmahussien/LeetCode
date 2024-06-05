@@ -1,29 +1,29 @@
 class Solution {
 public:
     vector<string> commonChars(vector<string>& words) {
-        unordered_map<char, int> freq_arr;
+        vector<int> freq_arr(26);
         vector<string> res;
 
         for (char c : words[0]) {
-            freq_arr[c]++;
+            freq_arr[c - 'a']++;
         }
 
         for (int i = 1; i < words.size(); i++) {
-            unordered_map<char, int> curr_freq;
+            vector<int> curr_freq(26);
 
             for (char c : words[i]) {
-                curr_freq[c]++;
+                curr_freq[c - 'a']++;
             }
 
-            for (auto &pair : freq_arr) {
-                pair.second = min(pair.second, curr_freq[pair.first]);
+            for (int i = 0; i < 26; i++) {
+                freq_arr[i] = min(freq_arr[i], curr_freq[i]);
             }
         }
 
-        for (auto pair : freq_arr) {
-            while (pair.second > 0) {
-                res.push_back(string(1, pair.first));
-                pair.second--;
+        for (int i = 0; i < 26; i++) {
+            while (freq_arr[i] > 0) {
+                res.push_back(string(1, 'a' + i)); 
+                freq_arr[i]--;
             }
         }
 
