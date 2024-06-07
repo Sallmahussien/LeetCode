@@ -1,27 +1,26 @@
 class Solution {
 public:
     string replaceWords(vector<string>& dictionary, string sentence) {
-        sort(dictionary.begin(), dictionary.end());
+        unordered_set<string> dict_set(dictionary.begin(), dictionary.end());
         int idx = 0;
-
         string res = \\;
+        int n = sentence.size();
 
-        while (idx < sentence.size()) {
+        while (idx < n) {
             string curr_word = \\;
-            while (idx < sentence.size() && sentence[idx] != ' ') {
-                curr_word += sentence[idx];
+            bool isFound = false;
+
+            while (idx < n && sentence[idx] != ' ') {
+                if (!isFound) curr_word += sentence[idx];
+
+                if (dict_set.count(curr_word)) {
+                    isFound = true;
+                }
                 idx++;
             }
 
-            for (string word : dictionary) {
-                if (curr_word.size() >= word.size() && curr_word.substr(0, word.size()) == word) {
-                    curr_word = word;
-                    break;
-                }
-            }
-
             res += curr_word;
-            if (idx < sentence.size()) res += sentence[idx];
+            if (idx < n) res += sentence[idx];
             idx++;
         }
 
