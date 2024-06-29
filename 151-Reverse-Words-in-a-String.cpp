@@ -9,31 +9,34 @@ private:
 
             while (i < n && s[i] != ' ') s[j++] = s[i++];
 
-            if (s[j-1] != ' ') s[j++] = ' ';
+            if (j > 0 && i < n) s[j++] = ' ';
         }
 
-        s.resize(j-1);
+        while (j > 0 && s[j-1] == ' ') j--;
+
+        s.resize(j);
     }
+
+    void reverse(string& s, int start, int end) {
+        while (start <= end) swap(s[start++], s[end--]);
+    }
+
 public:
     string reverseWords(string s) {
         trim(s);
-        int l = 0, r = s.size() - 1;
+        cout << s << endl;
+        int n = s.size();
+        reverse(s, 0, n-1);
+        
 
-        while (l <= r) swap(s[l++], s[r--]);
-
-        for (r = 0, l = 0; r < s.size(); r++) {
-            if (s[r] == ' ') {
-                int idx = r - 1;
-                while (l <= idx) {
-                    swap(s[l++], s[idx--]);
-                }
+        for (int r = 0, l = 0; r <= n; r++) {
+            if (r == n || s[r] == ' ') {
+                reverse(s, l, r-1);
 
                 l = r + 1;
             }  
         }
 
-        r--;
-        while (l <= r) swap(s[l++], s[r--]);
         return s;
     }
 };
