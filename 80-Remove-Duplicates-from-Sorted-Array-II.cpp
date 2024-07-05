@@ -7,21 +7,50 @@ private:
 
 public:
     int removeDuplicates(vector<int>& nums) {
-        int l = 0, r = 0;
+        // int l = 0, r = 0;
 
-        while(r < nums.size()) {
-            int count = 1;
+        // while(r < nums.size()) {
+        //     int count = 1;
 
-            while (r + 1 < nums.size() && nums[r] == nums[r+1]) count++, r++;
+        //     while (r + 1 < nums.size() && nums[r] == nums[r+1]) count++, r++;
 
-            for (int i = 0; i < min(2, count); i++) {
-                nums[l] = nums[r];
-                l++;
+        //     for (int i = 0; i < min(2, count); i++) {
+        //         nums[l] = nums[r];
+        //         l++;
+        //     }
+
+        //     r++;
+        // }
+
+        // return l;
+
+
+        if (nums.size() < 3) return nums.size(); 
+        int l = 1;
+        for (int r = 2; r < nums.size(); r++) {
+            if ((nums[l] == nums[l-1] && nums[l] != nums[r]) || (nums[l-1] != nums[r])) {
+                nums[++l] = nums[r];
             }
-
-            r++;
         }
 
-        return l;
+        return l+1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 };
