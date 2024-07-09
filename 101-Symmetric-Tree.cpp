@@ -13,7 +13,7 @@ class Solution {
 private:
     bool is_symm(TreeNode* left, TreeNode* right) {
         if (!left && !right) return true;
-        if ((!left && right) || (left && !right)) return false;
+        if (!left || !right) return false;
 
         if (left->val != right->val) return false;
 
@@ -21,6 +21,25 @@ private:
     }
 public:
     bool isSymmetric(TreeNode* root) {
+        // recursive solution
         return is_symm(root->left, root->right);
+
+        // iterative solution
+        // queue<pair<TreeNode*, TreeNode*>> q;
+        // q.push({root->left, root->right});
+
+        // while (!q.empty()) {
+        //     auto [left, right] = q.front();
+        //     q.pop();
+
+        //     if (!left && !right) continue;
+        //     if (!left || !right) return false;
+        //     if (left->val != right->val) return false;
+
+        //     q.push({left->left, right->right});
+        //     q.push({left->right, right->left});
+        // }
+
+        // return true;
     }
 };
