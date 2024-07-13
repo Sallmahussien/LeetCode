@@ -34,46 +34,39 @@ public:
             cout << robot.pos << endl;
             if (robot.dir == 'R') stk.push(robot);
             else {
-                if (stk.empty() || stk.top().dir == 'L') stk.push(robot);
-                else if (robot.health < stk.top().health) stk.top().health--;
-                else if (robot.health == stk.top().health) stk.pop();
-                else {
-                    bool isCollide = false;
-                    while (!stk.empty() && robot.dir != stk.top().dir) {
-                        if (robot.health < stk.top().health) {
-                            isCollide = true;
-                            stk.top().health--;
-                            break;
-                        }
-
-                        if (robot.health == stk.top().health) {
-                            stk.pop();
-                            isCollide = true;
-                            break;
-                        }
-
+                bool is_collide = false;
+                while (!stk.empty() && stk.top().dir == 'R') {
+                    Robot& top_robot = stk.top();
+                    if (robot.health > top_robot.health) {
                         robot.health--;
-                        stk.pop();  
+                        stk.pop();
+                    } else if (robot.health == top_robot.health) {
+                        stk.pop();
+                        is_collide = true;
+                        break;
+                    } else {
+                        top_robot.health--;
+                        is_collide = true;
+                        break;
                     }
-
-                    if (!isCollide) stk.push(robot);
                 }
+                if (!is_collide) stk.push(robot);
             }
         }
 
-        vector<int> res;
-        vector<Robot> robot_vec;
+        vector<Robot> survivors;
 
         while (!stk.empty()) {
             Robot top_robot = stk.top();
             stk.pop();
-            robot_vec.push_back(top_robot);
+            survivors.push_back(top_robot);
         }
 
-        sort(robot_vec.begin(), robot_vec.end(), compare_idx);
+        sort(survivors.begin(), survivors.end(), compare_idx);
 
-        for (auto robot : robot_vec) {
-            res.push_back(robot.health);
+        vector<int> res;
+        for (auto survivor : survivors) {
+            res.push_back(survivor.health);
         }
 
         return res;
