@@ -5,12 +5,12 @@ public:
 
         for (string s : arr) freq_arr[s]++;
 
-        vector<string> distinct_strs;
         for (string s : arr) {
-            if (freq_arr[s] == 1) distinct_strs.push_back(s);
+            if (freq_arr[s] == 1) k--;
+
+            if (k == 0) return s;
         }
 
-        return distinct_strs.size() >= k ? distinct_strs[k-1] : "";
-        
+        return "";
     }
 };
