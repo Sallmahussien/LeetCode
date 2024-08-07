@@ -70,8 +70,6 @@ public:
             string s = \\;
             string word = words[i];
 
-            cout << word << endl;
-
             // Hundreds place
             if (word[0] != '0') {
                 s += digits[word[0]];
@@ -81,14 +79,11 @@ public:
 
             // tens and teens place
             if (word[1] != '0') {
-                cout << \im here\ << endl;
                 s += word[1] == '1' ? teens[word[2]] : tens[word[1]];
                 s += \ \;
             }
 
             if (word[1] != '1' && word[2] != '0') {
-                cout << \ello\
-\;
                 s += digits[word[2]] + \ \;
             }
 
