@@ -1,33 +1,20 @@
 class Solution {
 public:
     int minimumPushes(string word) {
-       unordered_map<char, int> frequency;
-        for (char c : word) {
-            frequency[c]++;
-        }
+       vector<int> count(26);
+       
+       for (char c : word) {
+        count[c - 'a']++;
+       }
 
-        vector<int> frequencies;
-        for (const auto& pair : frequency) {
-            frequencies.push_back(pair.second);
-        }
+       sort(count.begin(), count.end(), greater<int>());
 
-        sort(frequencies.begin(), frequencies.end(), greater<int>());
+        int res = 0;
+       for (int i = 0; i < count.size(); i++) {
+        if (count[i] == 0) break;
+        res += count[i] * (1 + ((int) i / 8));
+       }
 
-        int totalPresses = 0;
-        int lettersAssigned = 0;
-        int pressesPerKey = 1;
-
-        for (int freq : frequencies) {
-            totalPresses += freq * pressesPerKey;
-            lettersAssigned++;
-
-            if (lettersAssigned == 8) {
-                lettersAssigned = 0;
-                pressesPerKey++;
-            }
-        }
-
-        return totalPresses;
-            
+       return res;
     }
 };
