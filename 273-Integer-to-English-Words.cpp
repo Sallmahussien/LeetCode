@@ -92,6 +92,10 @@ public:
             res = s + res;
         }
 
-        return trim(res);
+        while (!res.empty() && res.back() == ' ') {
+            res.pop_back();
+        }
+
+        return res;
     }
 };
