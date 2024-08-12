@@ -1,26 +1,25 @@
 class Solution {
+private:
+    bool isAlphanumeric(char c) {
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
+    }
+
 public:
     bool isPalindrome(string s) {
-        int i = 0, j = s.size() - 1;
+        int l = 0, r = s.size() - 1;
 
-        while (i <= j) {
-            while(i < j && !_isalnum(s[i])) i++;
-            while(i < j && !_isalnum(s[j])) j--;
+        while (l < r) {
+            while (l < s.size() && !isAlphanumeric(s[l])) l++;
+            while (r >= 0 && !isAlphanumeric(s[r])) r--;
 
-            if (tolower(s[i]) != tolower(s[j])) return false;
-            i++;
-            j--;
+            if (l >= r) break;
+
+            if (tolower(s[l]) != tolower(s[r])) return false;
+
+            l++, r--;
         }
 
         return true;
-        
     }
-
-    bool _isalnum(char c) {
-        if ((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
-            return true;
-        }
-
-        return false;
-    }
+       
 };
