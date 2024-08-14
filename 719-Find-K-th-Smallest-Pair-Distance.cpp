@@ -2,11 +2,13 @@ class Solution {
 private:
     int countPairs(vector<int>& nums, int mid) {
         int count = 0;
+        int j = 1;
 
         for (int i = 0; i < nums.size(); i++) {
-            for (int j = i+1; j < nums.size() && nums[j] - nums[i] <= mid; j++) {
-                count++;
+            for (; j < nums.size() && nums[j] - nums[i] <= mid; j++) {
             }
+
+            count += j - i - 1;
         }
     
         return count;
