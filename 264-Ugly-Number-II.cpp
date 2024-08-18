@@ -19,10 +19,6 @@ public:
             if (next_ugly == five_factor) k++;
         }
 
-        for (int ugly : uglies) {
-            cout << ugly << endl;
-        }
-
         return uglies.back();
     }
 };
