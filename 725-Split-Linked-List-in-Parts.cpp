@@ -11,41 +11,37 @@
 class Solution {
 private:
     int getLength(ListNode* head) {
-        int len = 0;
-        ListNode* curr = head;
-
-        while (curr) {
-            len++;
-            curr = curr->next;
+        int length = 0;
+        while (head) {
+            length++;
+            head = head->next;
         }
-
-        return len;
+        return length;
     }
+
 public:
     vector<ListNode*> splitListToParts(ListNode* head, int k) {
-        int list_len = getLength(head);
-        int min_sub_list_len = list_len / k;
-        int remaining_nodes = list_len > k ? list_len % k : 0;
-        vector<ListNode*> res(k);
-        ListNode* curr = head;
-        
+        int totalLength = getLength(head);
+        int basePartSize = totalLength / k;
+        int extraNodes = totalLength % k;
 
-        for (int idx = 0; idx < k; idx++) {
-            res[idx] = curr;
-            for (int i = 0; i < min_sub_list_len-1 && curr; i++) {
-                curr = curr->next;
+        vector<ListNode*> result(k, nullptr);
+        ListNode* current = head;
+
+        for (int i = 0; i < k && current; ++i) {
+            result[i] = current;
+            int partSize = basePartSize + (extraNodes > 0 ? 1 : 0); 
+
+            for (int j = 1; j < partSize; ++j) {
+                current = current->next;
             }
 
-            if (remaining_nodes > 0 && curr) {
-                curr = curr->next;
-                remaining_nodes--;
-            }
-
-            ListNode* tmp = curr;
-            if (curr) curr = curr->next;
-            if (tmp) tmp->next = nullptr;
+            ListNode* nextPartHead = current->next;
+            current->next = nullptr;
+            current = nextPartHead;
+            extraNodes--;
         }
 
-        return res;
+        return result;
     }
 };
