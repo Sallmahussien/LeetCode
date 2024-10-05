@@ -1,25 +1,33 @@
 class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
-        if (s1.size() > s2.size()) return false;
-    
-        unordered_map<char, int> freq_s1;
+        if (s2.size() < s1.size()) return false;
 
-        for (char s: s1) {
-            freq_s1[s]++;
+        unordered_map<char, int> s1_map;
+        for (char c : s1) {
+            s1_map[c]++;
         }
 
-        int window_size = s1.size();
+        unordered_map<char, int> s2_map;
 
-        for (int i = 0; i < s2.size()-window_size+1; i++) {
-            unordered_map<char, int> freq_window;
-            for (int j = 0; j < window_size; j++) {
-                freq_window[s2[i+j]]++;
+        int l = 0;
+
+        for (int r = 0; r < s2.size(); r++) {
+            s2_map[s2[r]]++;
+
+            if (r-l+1 == s1.size()) {
+                if (s1_map == s2_map) {
+                    return true;
+                } else {
+                    s2_map[s2[l]]--;
+                    if (s2_map[s2[l]] == 0) {
+                        s2_map.erase(s2[l]);
+                    }
+                    l++;
+                }
             }
-
-            if (freq_s1 == freq_window) return true;
         }
 
-        return false;   
+        return false;
     }
 };
