@@ -1,35 +1,33 @@
 class Solution {
-public:
-    int numberOfSubarrays(vector<int>& nums, int k) {
-    //     int res = 0;
+private:
+    int get_leading_even(vector<int>& nums, int l) {
+        int res = 0;
 
-    //     for (int i = 0; i < nums.size(); i++) {
-    //         int count = 0;
-    //         for (int j = i; j < nums.size(); j++) {
-    //             if (nums[j] % 2 != 0) count++;
-
-    //             if (count == k) res += 1;
-    //         }
-    //     }
-
-    //    return res;
-
-        int l = 0, m = 0, res = 0, odds = 0;
-        for (int r = 0; r < nums.size(); r++) {
-            if (nums[r] % 2 != 0) odds++;
-
-            if (odds > k) {
-                l = m + 1;
-                m++;
-                odds--;
-            }
-
-            if (odds == k) {
-                while(nums[m] % 2 == 0) m++;
-                res += m - l + 1;
-            }
+        for (int i = l; nums[i] % 2 == 0; i++) {
+            res++;
         }
 
         return res;
+    }
+
+public:
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        int count = 0;
+        int l = 0, odd_count = 0;
+
+        for (int r = 0; r < nums.size(); r++) {
+            if (nums[r] % 2 != 0) odd_count++;
+
+            while (odd_count > k) {
+                if (nums[l] % 2 != 0) odd_count--;
+                l++;
+            }
+
+            if (odd_count == k) {
+                count += 1 + get_leading_even(nums, l);
+            }
+        }
+
+        return count;
     }
 };
