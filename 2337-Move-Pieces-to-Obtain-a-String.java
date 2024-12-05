@@ -1,51 +1,65 @@
 class Solution {
-    private Map createMap(String str) {
-        Map<Character, Integer> map = new HashMap<>();
-        map.put('L', 0);
-        map.put('R', 0);
+    private Map<Character, Integer> createFrequencyMap(String str) {
+        Map<Character, Integer> frequencyMap = new HashMap<>();
+        frequencyMap.put('L', 0);
+        frequencyMap.put('R', 0);
 
-        for (int i = 0; i < str.length(); i++) {
-            char c = str.charAt(i);
-            if (map.containsKey(c)) {
-                map.put(c, map.get(c) + 1);
+        for (char c : str.toCharArray()) {
+            if (frequencyMap.containsKey(c)) {
+                frequencyMap.put(c, frequencyMap.get(c) + 1);
             }
         }
 
-        return map;
+        return frequencyMap;
     }
+
     public boolean canChange(String start, String target) {
-        if (start.equals(target)) return true;
+        // Early return if the strings are already equal
+        if (start.equals(target)) {
+            return true;
+        }
 
-        Map<Character, Integer> startMap = createMap(start);
-        Map<Character, Integer> targetMap = createMap(target);
-
-        if (!startMap.equals(targetMap)) {
+        // Check if the frequency maps match
+        if (!createFrequencyMap(start).equals(createFrequencyMap(target))) {
             return false;
         }
 
-        int i = 0, j = 0;
-        int startSize = start.length();
-        int targetSize = target.length();
+        int startIndex = 0, targetIndex = 0;
+        int startLength = start.length(), targetLength = target.length();
 
-        // i for start and j for target
-        while (i < startSize && j < targetSize) {
-            while (i < startSize && start.charAt(i) == '_') i++;
-            while (j < targetSize && target.charAt(j) == '_') j++;
-
-            if (i == startSize || j == targetSize) break;
-
-            if (start.charAt(i) != target.charAt(j)) {
-                return false;
+        // Two-pointer traversal to match positions
+        while (startIndex < startLength && targetIndex < targetLength) {
+            // Skip blank spaces ('_') in both strings
+            while (startIndex < startLength && start.charAt(startIndex) == '_') {
+                startIndex++;
             }
-            if (target.charAt(j) == 'L' && !(i >= j)) {
-                return false;
-            }
-            if (target.charAt(j) == 'R' && !(i <= j)) {
-                return false;
+            while (targetIndex < targetLength && target.charAt(targetIndex) == '_') {
+                targetIndex++;
             }
 
-            i++;
-            j++;
+            // If one pointer reaches the end, break
+            if (startIndex == startLength || targetIndex == targetLength) {
+                break;
+            }
+
+            // Check for mismatched characters
+            char startChar = start.charAt(startIndex);
+            char targetChar = target.charAt(targetIndex);
+            if (startChar != targetChar) {
+                return false;
+            }
+
+            // Validate movement constraints
+            if (targetChar == 'L' && startIndex < targetIndex) {
+                return false; // 'L' can only move left
+            }
+            if (targetChar == 'R' && startIndex > targetIndex) {
+                return false; // 'R' can only move right
+            }
+
+            // Move both pointers forward
+            startIndex++;
+            targetIndex++;
         }
 
         return true;
