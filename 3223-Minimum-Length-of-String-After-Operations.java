@@ -8,11 +8,7 @@ class Solution {
 
         int count = 0;
         for (Integer val : freqArr.values()) {
-            while (val >= 3) {
-                val -= 2;
-            }
-
-            count += val;
+            count += val % 2 == 0 ? 2 : 1;
         }
 
         return count;
