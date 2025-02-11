@@ -3,7 +3,7 @@ class Solution {
         int x = 0;
 
         for (String op : operations) {
-            if (op.startsWith("++") || op.endsWith("++")) {
+            if (op.charAt(1) == '+') {
                 x++;
             } else {
                 x--;
