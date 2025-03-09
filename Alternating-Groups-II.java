@@ -11,19 +11,16 @@ public class Solution {
         int length = extendedColors.length;
         int result = 0;
         int left = 0;
-        int right = 1;
 
-        while (right < length) {
+        for (int right = 1; right < length; right++) {
             if (extendedColors[right] == extendedColors[right - 1]) {
                 left = right;
             }
 
-            right++;
-
-            if (right - left < k) continue;
-
-            result++;
-            left++;
+            if (right - left + 1 == k) {
+                result++;
+                left++;
+            }
         }
 
         return result;
