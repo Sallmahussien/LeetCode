@@ -3,26 +3,16 @@ class Solution {
         int ans = 0;
 
         for (int i = low; i <= high; i++) {
-            String num = String.valueOf(i);
-            int n = num.length();
+            if (i >= 10 && i <= 99 && i % 11 == 0) ans++;
 
-            if (n % 2 == 1) continue;
-            int firstHalf = getDigitSum(0, n / 2, num);
-            int secondHalf = getDigitSum(n / 2, n, num);
+            if (i >= 1000 && i <= 9999) {
+                int rightHalf = i % 10 + (i / 10) % 10;
+                int leftHalf = (i / 100) % 10 + (i / 1000) % 10;
 
-            if (firstHalf == secondHalf) ans++;
+                if (leftHalf == rightHalf) ans++;
+            }
         }
 
         return ans;
-    }
-
-    private int getDigitSum(int start, int end, String str) {
-        int sum = 0;
-
-        for (int i = start; i < end; i++) {
-            sum += str.charAt(i) - '0';;
-        }
-
-        return sum;
     }
 }
