@@ -6,12 +6,13 @@ class Solution(object):
         :rtype: bool
         """
 
-        arr = [0] * 26
-        for c in s:
-            arr[ord(c) - ord('a')] += 1
+        if (len(s) != len(t)):
+            return False
 
-        for c in t:
-            arr[ord(c) - ord('a')] -= 1
+        arr = [0] * 26
+        for i in range(len(s)):
+            arr[ord(s[i]) - ord('a')] += 1
+            arr[ord(t[i]) - ord('a')] -= 1
 
         for i in arr:
             if i != 0:
